@@ -14,14 +14,13 @@ export default function ButtonWithTooltip({ children, tooltipContent }: {
         ref={btnRef}
         onPointerEnter={() => {
           const btnRect = btnRef.current!.getBoundingClientRect();
-          // console.log(btnRect.x, btnRect.y);
-
           setTargetRect(btnRect);
         }}
         onPointerLeave={() => {
           setTargetRect(null);
         }}
       />
+      <span children={children} />
       {targetRect !== null && <Tooltip targetRect={targetRect}>{tooltipContent}</Tooltip>}
     </>
   );

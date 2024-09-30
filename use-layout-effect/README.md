@@ -1,10 +1,17 @@
 # useLayoutEffect demo
 
-useLayoutEffect 内部的代码和所有计划的状态更新阻塞了浏览器重新绘制屏幕。如果过度使用，这会使你的应用程序变慢。如果可能的话，尽量选择 useEffect。
-
 用法 
 在浏览器重新绘制屏幕前计算布局 
 
-1. 渲染初始的内容。
-2. 在 浏览器重新绘制屏幕之前 测量布局。
-3. 使用所读取的布局信息渲染最终内容。
+useLayoutEffect是React提供的一个自定义Hook，用于在DOM更新之后同步执行副作用操作。它的实现原理与useEffect类似，都是基于React的调度器和渲染流程。
+
+useLayoutEffect会在DOM更新之后同步执行，而useEffect在DOM更新之后异步执行。这意味着useLayoutEffect会阻塞浏览器的渲染，直到副作用操作执行完毕，而useEffect会在浏览器渲染完成之后执行副作用操作。
+
+useLayoutEffect的实现原理如下：
+1. 当组件渲染时，React会将useLayoutEffect中的副作用操作函数添加到一个待执行的队列中，而不会立即执行。
+2. 在DOM更新完成之后，React会执行useLayoutEffect中的副作用操作函数。
+3. React会等待浏览器完成渲染，并且在下一帧之前不会更新屏幕，以确保副作用操作可以同步更新DOM。
+4. 在执行副作用操作函数期间，如果有新的state更新，React会重新计算组件的布局，并重新执行useLayoutEffect中的副作用操作函数。
+5. 在执行完所有的useLayoutEffect副作用操作函数之后，React会将组件标记为已完成渲染，可以更新屏幕。
+
+需要注意的是，由于useLayoutEffect会阻塞浏览器的渲染，因此需要谨慎使用，以避免影响用户体验。通常情况下，可以使用useEffect来执行副作用操作，只有在需要在DOM更新之后立即执行副作用操作时才使用useLayoutEffect。
