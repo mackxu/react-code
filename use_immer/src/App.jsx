@@ -1,4 +1,5 @@
 import { useImmer } from 'use-immer';
+import useProduct from './useProduct';
 
 const initialProducts = [{
   id: 0,
@@ -15,10 +16,15 @@ const initialProducts = [{
 }];
 
 export default function App() {
+  // const [
+  //   products,
+  //   setProducts
+  // ] = useImmer(initialProducts);
+
   const [
     products,
-    setProducts
-  ] = useImmer(initialProducts)
+    setProducts,
+  ] = useProduct(initialProducts);
 
   function handleIncreaseClick(productId) {
     setProducts((draft) => {
